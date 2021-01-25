@@ -12,13 +12,14 @@ class TicTacToe:
         self.no_moves_by_X=0
         self.no_moves_by_O=0
 
+
     def make_a_move(self,row,col,move_maker):
-        # move_maker is X or O
-        if move_maker=="X":
-            self.no_moves_by_X+=1
-        elif move_maker=="O":
-            self.no_moves_by_O+=1
-        self.board[row][col]=[move_maker]
+        if not self.game_over() and not self.is_win()[0]:
+            if move_maker=="X":
+                self.no_moves_by_X+=1
+            elif move_maker=="O":
+                self.no_moves_by_O+=1
+            self.board[row][col]=[move_maker]
 
     def display(self):
         for i in range(3):
@@ -30,18 +31,22 @@ class TicTacToe:
         return copy.deepcopy(self.board)
 
     def correct_move(self,move_maker,row,col):
-        correct = False
-        if move_maker not in ("X","O") or row not in (1,2,0) and col not in (1,2,0) or self.board[row][col]!=["_"]:
-            return correct
-        temp_x = self.no_moves_by_X
-        temp_y = self.no_moves_by_O
-        if move_maker=="X":
-            temp_x+=1
-        elif move_maker=="O":
-            temp_y+=1
-        if abs(temp_x-temp_y) in (0,1):
-            correct = True
-        return correct
+
+        if self.board[row][col]==["_"]:
+            return True
+        return False
+        # correct = False
+        # if move_maker not in ("X","O") or row not in (1,2,0) and col not in (1,2,0) or self.board[row][col]!=["_"]:
+        #     return correct
+        # temp_x = self.no_moves_by_X
+        # temp_y = self.no_moves_by_O
+        # if move_maker=="X":
+        #     temp_x+=1
+        # elif move_maker=="O":
+        #     temp_y+=1
+        # if abs(temp_x-temp_y) in (0,1):
+        #     correct = True
+        # return correct
 
     def is_win(self):
         for x in range(3):
